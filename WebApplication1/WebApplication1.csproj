@@ -204,6 +204,7 @@
     <Compile Include="Areas\Admin\Controllers\EmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\FactorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\FirstSecoundCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MarketerSliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\MobileSliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Areas\Admin\Controllers\WholeSalersController.cs" />
     <Compile Include="Controllers\api\CategoryController.cs" />
     <Compile Include="Controllers\api\FactorController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
     <Compile Include="Controllers\api\NewsController.cs" />
     <Compile Include="Controllers\api\ProductController.cs" />
     <Compile Include="Controllers\api\SettingController.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Models\Factor.cs" />
     <Compile Include="Models\FactorItem.cs" />
     <Compile Include="Models\FitstCategory.cs" />
+    <Compile Include="Models\MarketerSlider.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\Members.cs" />
     <Compile Include="Models\News.cs" />
@@ -371,6 +374,8 @@
     <Content Include="Areas\Admin\Views\Comment\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Factors\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Factors\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerSlider\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerSlider\Create.cshtml" />
     <None Include="Properties\PublishProfiles\book.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

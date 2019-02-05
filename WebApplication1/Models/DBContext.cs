@@ -8,8 +8,8 @@ namespace WebApplication1.Models
 {
     public class DBContext: DbContext
     {
-        //public DBContext() : base("Data Source=.;Initial Catalog=cp33105_db;Integrated Security=true")
-        public DBContext() : base("Data Source=.;Initial Catalog=sarzami1_shop;User Id=sarzami1_shopusr;Password=Amir@amir$amir2;")
+        public DBContext() : base("Data Source=.;Initial Catalog=cp33105_db;Integrated Security=true")
+        //public DBContext() : base("Data Source=.;Initial Catalog=sarzami1_shop;User Id=sarzami1_shopusr;Password=Amir@amir$amir2;")
         {
             this.Configuration.ProxyCreationEnabled = false;
             this.Configuration.LazyLoadingEnabled = false;   
@@ -41,6 +41,9 @@ namespace WebApplication1.Models
         public DbSet<ConfirmEmail> ConfirmEmails{ get; set; }
         public DbSet<UserRecover> UserRecover{ get; set; }
         public DbSet<Complaint> Complaints { get; set; }
+
+
+        public DbSet<MarketerSlider> MarketerSliders{ get; set; }
         class configure : System.Data.Entity.Migrations.DbMigrationsConfiguration<DBContext>
         {
             public configure()
