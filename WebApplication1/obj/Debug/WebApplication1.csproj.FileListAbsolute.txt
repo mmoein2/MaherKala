@@ -131,6 +131,5 @@ D:\Project\MaherKala\WebApplication1\WebApplication1\bin\System.Web.Mvc.xml
 D:\Project\MaherKala\WebApplication1\WebApplication1\bin\System.Net.Http.Formatting.xml
 D:\Project\MaherKala\WebApplication1\WebApplication1\bin\System.Web.Http.xml
 D:\Project\MaherKala\WebApplication1\WebApplication1\bin\System.Web.Http.WebHost.xml
-D:\Project\MaherKala\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 D:\Project\MaherKala\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 D:\Project\MaherKala\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb

@@ -217,6 +217,7 @@
     <Compile Include="Controllers\api\CategoryController.cs" />
     <Compile Include="Controllers\api\FactorController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerUserController.cs" />
     <Compile Include="Controllers\api\NewsController.cs" />
     <Compile Include="Controllers\api\ProductController.cs" />
     <Compile Include="Controllers\api\SettingController.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Helpers\CkeditorHtmlHelpers.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\MarketerUser.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\ConfirmEmail.cs" />
