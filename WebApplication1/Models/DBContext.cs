@@ -45,6 +45,10 @@ namespace WebApplication1.Models
 
         public DbSet<MarketerSlider> MarketerSliders{ get; set; }
         public DbSet<MarketerUser> MarketerUsers { get; set; }
+
+        public DbSet<MarketerNews> MarketerNews { get; set; }
+        public DbSet<MarketerPrize> MarketerPrizes{ get; set; }
+        public DbSet<MarketerChat> MarketerChats { get; set; }
         class configure : System.Data.Entity.Migrations.DbMigrationsConfiguration<DBContext>
         {
             public configure()

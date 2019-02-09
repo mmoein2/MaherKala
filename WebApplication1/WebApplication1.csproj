@@ -216,6 +216,8 @@
     <Compile Include="Areas\Admin\Controllers\WholeSalersController.cs" />
     <Compile Include="Controllers\api\CategoryController.cs" />
     <Compile Include="Controllers\api\FactorController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerChatController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerNewsController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerUserController.cs" />
     <Compile Include="Controllers\api\NewsController.cs" />
@@ -233,12 +235,15 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WholeSalerController.cs" />
     <Compile Include="Filter\ApiAuthorize.cs" />
+    <Compile Include="Filter\MarketerAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CkeditorHtmlHelpers.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\MarketerChat.cs" />
+    <Compile Include="Models\MarketerNews.cs" />
     <Compile Include="Models\MarketerUser.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Complaint.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Models\MarketerSlider.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\Members.cs" />
+    <Compile Include="Models\MarketerPrize.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
