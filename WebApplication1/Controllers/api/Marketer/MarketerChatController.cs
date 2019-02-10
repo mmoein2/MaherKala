@@ -40,8 +40,8 @@ namespace WebApplication1.Controllers.api.Marketer
         public object Receive()
         {
             long Timestamp = Convert.ToInt64(HttpContext.Current.Request.Form["Timestamp"]);
-            var data = db.MarketerChats.Where(p => p.Timestamp > Timestamp).OrderBy(p => p.Id);
-            var paged = new PagedItem<MarketerChat>(data, "/api/MarketerChat/Receive");
+            var data = db.MarketerChats.Where(p => p.Timestamp > Timestamp).Select(p=> new{ p.Id,p.Text,User=p.User.Name+" "+p.User.LastName}).OrderBy(p => p.Id);
+            var paged = new PagedItem<object>(data, "/api/MarketerChat/Receive");
             return new { Data = paged, StatusCode = 0 };
         }
     }

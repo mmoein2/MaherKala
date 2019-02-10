@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers.api.Marketer
             m.CardAccountNumber = CardAccountNumber;
             m.IBNA = IBNA;
             m.Description = Description;
-
+            m.IsAvailable = false;
 
             if (!HttpContext.Current.Request.Form.AllKeys.Contains("IDCardPicture"))
             {
@@ -141,7 +141,11 @@ namespace WebApplication1.Controllers.api.Marketer
             {
                 return new { StatusCode = 1, Message = "شماره موبایل یا رمز عبور صحیح نیست" };
             }
-            if(!DevOne.Security.Cryptography.BCrypt.BCryptHelper.CheckPassword(Password,user.Password))
+            if (user.IsAvailable==false)
+            {
+                return new { StatusCode = 2, Message = "نام کاربری شما هنوز فعال نشده است" };
+            }
+            if (!DevOne.Security.Cryptography.BCrypt.BCryptHelper.CheckPassword(Password,user.Password))
             {
                 return new { StatusCode = 1, Message = "شماره موبایل یا رمز عبور صحیح نیست" };
             }

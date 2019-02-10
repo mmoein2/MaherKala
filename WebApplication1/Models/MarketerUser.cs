@@ -59,6 +59,7 @@ namespace WebApplication1.Models
         public string Description { get; set; }
 
         public string Api_Token { get; set; }
+        public bool IsAvailable { get; set; }
 
     }
 }
