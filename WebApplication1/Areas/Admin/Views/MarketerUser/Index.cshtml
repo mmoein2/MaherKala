@@ -39,6 +39,7 @@
                         <th>نام خانوادگی</th>
                         <th>موبایل</th>
                         <th>تلفن</th>
+                        <th>بازاریاب پدر</th>
                         <th>عملیات</th>
                     </tr>
                     @foreach (var data in ViewBag.Data.Data)
@@ -48,6 +49,17 @@
                             <td>@data.LastName</td>
                             <td>@data.Mobile</td>
                             <td>@data.Phone</td>
+                            <td> @if (data.Parent_Id == 0)
+                                { @String.Format("ندارد") }
+                            else
+                            {
+                                var x = new WebApplication1.Models.DBContext();
+                                 int PID = data.Parent_Id;
+                                var usr = x.MarketerUsers.FirstOrDefault(p => p.Id == PID);
+                                @String.Format(usr.Name+" "+usr.LastName)
+
+                            } 
+                            </td>
                         <td>
                             @if (data.IsAvailable == true)
                             {<a href="/Admin/MarketerUser/Deactive/@data.Id" class="btn btn-danger">غیرفعالسازی </a>}

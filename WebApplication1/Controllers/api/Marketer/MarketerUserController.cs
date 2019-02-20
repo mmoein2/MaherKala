@@ -37,8 +37,10 @@ namespace WebApplication1.Controllers.api.Marketer
             string CardAccountNumber = (HttpContext.Current.Request.Form["CardAccountNumber"]);
             string IBNA = HttpContext.Current.Request.Form["IBNA"];
             string Description = HttpContext.Current.Request.Form["Description"];
+            string Parent_Id = HttpContext.Current.Request.Form["Parent_Id"];
 
-            if(Password.Length<8)
+
+            if (Password.Length<8)
             {
                 return new { StatusCode = 1, Message = "طول رمز عبور حداقل باید هشت رقم باشد" };
             }
@@ -61,7 +63,7 @@ namespace WebApplication1.Controllers.api.Marketer
             m.IBNA = IBNA;
             m.Description = Description;
             m.IsAvailable = false;
-
+            m.Parent_Id = 0;
             if (!HttpContext.Current.Request.Form.AllKeys.Contains("IDCardPicture"))
             {
                 return new { StatusCode=1,Message="تصویر کارت ملی را ارسال کنید"};
@@ -103,6 +105,13 @@ namespace WebApplication1.Controllers.api.Marketer
             
 
             m.Api_Token = Guid.NewGuid().ToString().Replace('-', '0');
+            if(Parent_Id!=null)
+            {
+                if(db.MarketerUsers.Any(p=>p.Id==Convert.ToInt32(Parent_Id)))
+                {
+                    m.Parent_Id = Convert.ToInt32(Parent_Id);
+                }
+            }
             db.MarketerUsers.Add(m);
             try
             {

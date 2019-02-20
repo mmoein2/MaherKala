@@ -24,7 +24,27 @@
                     <label>موبایل :</label>
                     <span>@ViewBag.Data.Mobile</span>
                 </div>
+                <div class="form-control">
 
+                    <label>بازاریاب پدر :</label>
+                    <span>
+                        @if (ViewBag.Data.Parent_Id == 0)
+                        { @String.Format("ندارد") }
+                        else
+                        {
+                            var x = new WebApplication1.Models.DBContext();
+                            int PID = ViewBag.Data.Parent_Id;
+                            var usr = x.MarketerUsers.FirstOrDefault(p => p.Id == PID);
+                            @String.Format(usr.Name + " " + usr.LastName)
+
+                        }
+
+                    </span>
+                </div>
+
+               
+
+                
 
                 <div class="form-control">
                     <label>تلفن :</label>
