@@ -49,6 +49,8 @@ namespace WebApplication1.Models
         public DbSet<MarketerNews> MarketerNews { get; set; }
         public DbSet<MarketerPrize> MarketerPrizes{ get; set; }
         public DbSet<MarketerChat> MarketerChats { get; set; }
+        public DbSet<MarketerFactor> MarketerFactor { get; set; }
+        public DbSet<MarketerFactorItem> MarketerFactorItem { get; set; }
         class configure : System.Data.Entity.Migrations.DbMigrationsConfiguration<DBContext>
         {
             public configure()

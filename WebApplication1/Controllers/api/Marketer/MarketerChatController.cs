@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers.api.Marketer
             msg.Timestamp = unixDateTime;
             db.MarketerChats.Add(msg);
             db.SaveChanges();
-            return new { StatusCode=0};
+            return new { Message=0};
         }
         [MarketerAuthorize]
         [HttpPost]
@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers.api.Marketer
             long Timestamp = Convert.ToInt64(HttpContext.Current.Request.Form["Timestamp"]);
             var data = db.MarketerChats.Where(p => p.Timestamp > Timestamp).Select(p=> new{ p.Id,p.Text,User=p.User.Name+" "+p.User.LastName}).OrderBy(p => p.Id);
             var paged = new PagedItem<object>(data, "/api/MarketerChat/Receive");
-            return new { Data = paged, StatusCode = 0 };
+            return new { Data = paged, Message = 0 };
         }
     }
 }

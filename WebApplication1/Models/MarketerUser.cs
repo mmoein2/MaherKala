@@ -61,6 +61,8 @@ namespace WebApplication1.Models
         public string Api_Token { get; set; }
         public bool IsAvailable { get; set; }
         public int Parent_Id { get; set; }
+        public bool IsFirstTime { get; set; }
+        public int FactorCounter { get; set; }
 
     }
 }

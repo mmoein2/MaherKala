@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers.api.Marketer
         [MarketerAuthorize]
         public object GetSliders()
         {
-            var list = new { Data = db.MarketerSliders.ToList() };
+            var list = new {Message=0, Data = db.MarketerSliders.ToList() };
             return list;
         }
     }

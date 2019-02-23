@@ -218,6 +218,7 @@
     <Compile Include="Controllers\api\CategoryController.cs" />
     <Compile Include="Controllers\api\FactorController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerChatController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerFactorController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerNewsController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerUserController.cs" />
@@ -244,6 +245,8 @@
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\MarketerChat.cs" />
+    <Compile Include="Models\MarketerFactor.cs" />
+    <Compile Include="Models\MarketerFactorItem.cs" />
     <Compile Include="Models\MarketerNews.cs" />
     <Compile Include="Models\MarketerUser.cs" />
     <Compile Include="Models\Comment.cs" />

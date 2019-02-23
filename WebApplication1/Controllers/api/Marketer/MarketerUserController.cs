@@ -112,6 +112,7 @@ namespace WebApplication1.Controllers.api.Marketer
                     m.Parent_Id = Convert.ToInt32(Parent_Id);
                 }
             }
+            m.IsFirstTime = true;
             db.MarketerUsers.Add(m);
             try
             {

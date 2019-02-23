@@ -168,13 +168,13 @@ namespace WebApplication1.Controllers.api
             {
                 return new { Message = 1 };
             }
-            var data = db.FactorItems.Include("Product").Where(p => p.Factor.Id == factor.Id).Where(p => p.Id == item_id).FirstOrDefault();
+            var data = db.FactorItems.Include("Product.Category").Where(p => p.Factor.Id == factor.Id).Where(p => p.Id == item_id).FirstOrDefault();
 
             if (data == null)
             {
                 return new { Message = 1 };
             }
-            db.Products.Include("Category").Where(p => p.Id == data.Product.Id).FirstOrDefault().Qty += data.Qty;
+            //db.Products.Include("Category").Where(p => p.Id == data.Product.Id).FirstOrDefault().Qty += data.Qty;
             db.FactorItems.Remove(data);
             db.SaveChanges();
             return new { Message = 0 };
@@ -193,12 +193,16 @@ namespace WebApplication1.Controllers.api
             {
                 return new { Message = 1 };
             }
-
+            List<object> Empty = new List<object>();
             foreach (var item in factor.FactorItems)
             {
                 item.UnitPrice = item.Product.Price - item.Product.Discount;
                 item.ProductName = item.Product.Name;
+                if (item.Product.Qty < item.Qty)
+                    Empty.Add(new { Detail="محصول " + item.Product.Name+" به تعداد انتخابی شما وجود ندارد"});
             }
+            if(Empty.Count>0)
+                return new { Message = 2, Empty };
             factor.TotalPrice = factor.ComputeTotalPrice()+15000;
             factor.Status = true;
             factor.Date = DateTime.Now;

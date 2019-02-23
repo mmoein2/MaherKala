@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers.api.Marketer
         {
             var data = db.MarketerNews.OrderByDescending(p=>p.Id);
             var paged = new PagedItem<MarketerNews>(data,"/api/MarketerNews/GetNews");
-            return new { Data = paged,StatusCode=0};
+            return new { Data = paged, Message = 0};
 
         }
         [HttpGet]
@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers.api.Marketer
         {
             var data = db.MarketerPrizes.OrderByDescending(p => p.Id);
             var paged = new PagedItem<MarketerPrize>(data, "/api/MarketerNews/GetPrizes");
-            return new { Data = paged, StatusCode = 0 };
+            return new { Data = paged, Message = 0 };
 
         }
     }
