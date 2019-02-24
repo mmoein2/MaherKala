@@ -59,6 +59,7 @@ namespace WebApplication1.Models
         public int TotalComment { get; set; }
         public Category Category { get; set; }
         public List<Comment> Comments{ get; set; }
+        public List<ProductPresent> ProductPercents { get; set; }
 
         public int Percent()
         {

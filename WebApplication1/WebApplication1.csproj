@@ -244,6 +244,7 @@
     <Compile Include="Helpers\CkeditorHtmlHelpers.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Commission.cs" />
     <Compile Include="Models\MarketerChat.cs" />
     <Compile Include="Models\MarketerFactor.cs" />
     <Compile Include="Models\MarketerFactorItem.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Models\MarketerPrize.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductPresent.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SecoundCategoory.cs" />
     <Compile Include="Models\Setting.cs" />

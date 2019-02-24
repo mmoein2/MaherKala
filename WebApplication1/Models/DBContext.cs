@@ -51,6 +51,8 @@ namespace WebApplication1.Models
         public DbSet<MarketerChat> MarketerChats { get; set; }
         public DbSet<MarketerFactor> MarketerFactor { get; set; }
         public DbSet<MarketerFactorItem> MarketerFactorItem { get; set; }
+        public DbSet<Commission> Commission { get; set; }
+        public DbSet<ProductPresent> ProductPresent { get; set; }
         class configure : System.Data.Entity.Migrations.DbMigrationsConfiguration<DBContext>
         {
             public configure()

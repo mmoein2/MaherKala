@@ -15,7 +15,7 @@
         @TempData["Error"]
     </div>
     <form id="submit_form" enctype="multipart/form-data" method="post" action="/Admin/Product/Update" role="form">
-        <input  value="@ViewBag.Data.Id" name="Id" type="hidden" class="form-control" id="">
+        <input value="@ViewBag.Data.Id" name="Id" type="hidden" class="form-control" id="">
         @Html.AntiForgeryToken()
         <!-- /.box-header -->
         <div class="box-body">
@@ -30,7 +30,7 @@
                             @foreach (var d in ViewBag.Categories)
                             {
 
-                                <option value="@d.Id" @if(d.Id == ViewBag.Data.Category.Id){ @String.Format("selected") }>
+                                <option value="@d.Id" @if (d.Id == ViewBag.Data.Category.Id) { @String.Format("selected")  }>
                                     @{
                                         int id = d.Id;
                                         var parent = new WebApplication1.Models.DBContext().Categories.Include("Parent").Where(p => p.Id == id).FirstOrDefault();
@@ -59,12 +59,92 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">مبلغ تخفیف</label>
-                <input onkeyup="numberWithCommas(this)" value="@String.Format("{0:0,0}", ViewBag.Data.Discount)" name="Discount"  class="form-control" id="disc">
+                <input onkeyup="numberWithCommas(this)" value="@String.Format("{0:0,0}", ViewBag.Data.Discount)" name="Discount" class="form-control" id="disc">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">موجودی</label>
                 <input value="@ViewBag.Data.Qty" name="Qty" type="number" class="form-control" id="exampleInputEmail1">
             </div>
+
+            @if (ViewBag.Data.ProductPercents.Count == 0)
+            {
+                <div>
+                    <label for="Commision">تعیین کمسیون</label>
+                    <input type="checkbox" id="Commision" name="Commision" onclick="commision()" />
+                </div>
+                <div class="form-group">
+                    <div style="padding-bottom:5px">
+                        <label for="exampleInputEmail1">حالت اول کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input disabled class="commisionNumber" name="CommisionMin1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input disabled class="commisionNumber" name="CommisionMax1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input disabled class="commisionNumber" name="CommisionPercent1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">حالت دوم کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input disabled class="commisionNumber" name="CommisionMin2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input disabled class="commisionNumber" name="CommisionMax2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input disabled class="commisionNumber" name="CommisionPercent2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">حالت سوم کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input disabled class="commisionNumber" name="CommisionMin3" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input disabled name="CommisionMax3" class="commisionNumber" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input disabled class="commisionNumber" name="CommisionPercent3" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <label for="Commision">تعیین کمسیون</label>
+                    <input type="checkbox" id="Commision" name="Commision" onclick="commision()" checked/>
+                </div>
+                <div class="form-group">
+                    <div style="padding-bottom:5px">
+                        <label for="exampleInputEmail1">حالت اول کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input value="@ViewBag.Data.ProductPercents[0].Min" class="commisionNumber" name="CommisionMin1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input value="@ViewBag.Data.ProductPercents[0].Max" class="commisionNumber" name="CommisionMax1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input value="@ViewBag.Data.ProductPercents[0].Percent" class="commisionNumber" name="CommisionPercent1" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">حالت دوم کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input value="@ViewBag.Data.ProductPercents[1].Min" class="commisionNumber" name="CommisionMin2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input value="@ViewBag.Data.ProductPercents[1].Max" class="commisionNumber" name="CommisionMax2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input value="@ViewBag.Data.ProductPercents[1].Percent" class="commisionNumber" name="CommisionPercent2" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">حالت سوم کمسیون</label>
+                    </div>
+                    <div style="padding:5px">
+                        <label style="font-weight:normal"> تعداد از </label> <input value="@ViewBag.Data.ProductPercents[2].Min" class="commisionNumber" name="CommisionMin3" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> تا </label> <input value="@ViewBag.Data.ProductPercents[2].Max" name="CommisionMax3" class="commisionNumber" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                        <label style="font-weight:normal"> درصد کمسیون </label> <input value="@ViewBag.Data.ProductPercents[2].Percent" class="commisionNumber" name="CommisionPercent3" style="border:1px solid #ccc;box-shadow:none;border-radius:0" type="number" />
+                    </div>
+                </div>
+            }
+            
             <div class="form-group">
                 <label for="exampleInputEmail1">برچسب گذاری</label>
                 <label style="font-size:10px;color:darkgreen" for="exampleInputEmail1">بعد از هر برچسب enter کنید</label>
@@ -167,6 +247,22 @@
 
 
 
+        }
+        function commision() {
+            if (document.getElementById("Commision").checked == true) {
+                var data = document.getElementsByClassName("commisionNumber");
+                Array.prototype.forEach.call(data, function (el) {
+                    // Do stuff here
+                    el.disabled = false;
+                });
+            }
+            else {
+                var data = document.getElementsByClassName("commisionNumber");
+                Array.prototype.forEach.call(data, function (el) {
+                    // Do stuff here
+                    el.disabled = true;
+                });
+            }
         }
 
     </script>
