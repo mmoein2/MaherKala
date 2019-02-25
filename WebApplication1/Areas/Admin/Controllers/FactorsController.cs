@@ -14,7 +14,7 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/Factors
         public ActionResult Index()
         {
-            var link = "/Admin/Factors/Index";
+            var link = "/Admin/MarketerFactors/Index";
             var buyer = Request["Buyer"];
             var flag = Request["IsAdminShow"];
             var data = db.Factors.Where(p => p.Status == true);

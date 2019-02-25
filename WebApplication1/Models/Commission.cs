@@ -12,6 +12,9 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public int Money { get; set; }
         public string Detail { get; set; }
+        public string Formula { get; set; }
         public DateTime Date { get; set; }
+        public MarketerUser MarketerUser { get; set; }
+        public MarketerFactor MarketerFactor { get; set; }
     }
 }
