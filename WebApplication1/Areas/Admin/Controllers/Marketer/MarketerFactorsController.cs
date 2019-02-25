@@ -105,5 +105,15 @@ namespace WebApplication1.Areas.Admin.Controllers.Marketer
             return Redirect(Request.UrlReferrer.ToString());
 
         }
+        public ActionResult Detail(int id)
+        {
+            var data = db.MarketerFactor.Include("MarketerFactorItems.Product.Category").Include("MarketerUser").Where(p => p.Id == id).FirstOrDefault();
+            var commision = db.Commission.FirstOrDefault(p => p.MarketerFactor.Id == data.Id);
+            data.IsAdminShow = true;
+            db.SaveChanges();
+            ViewBag.Data = data;
+            ViewBag.Commision = commision;
+            return View();
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace WebApplication1.Models
         [MaxLength(10,ErrorMessage ="طول کدپستی باید ده رقم باشد")]
         [MinLength(10, ErrorMessage = "طول کدپستی باید ده رقم باشد")]
         public string BuyerPostalCode { get; set; }
+        
 
         public long ComputeTotalPrice()
         {
