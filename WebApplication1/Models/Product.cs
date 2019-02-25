@@ -60,7 +60,7 @@ namespace WebApplication1.Models
         public Category Category { get; set; }
         public List<Comment> Comments{ get; set; }
         public List<ProductPresent> ProductPercents { get; set; }
-
+        public bool IsOnlyForMarketer { get; set; }
         public int Percent()
         {
             

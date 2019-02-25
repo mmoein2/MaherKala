@@ -148,41 +148,51 @@ namespace WebApplication1.Areas.Admin.Controllers
             db.Products.Add(product);
 
             var commision = Request["Commision"];
-            if (commision != null)
+
+            var cMin1 = Convert.ToInt32(Request["CommisionMin1"]);
+            var cMax1 = Convert.ToInt32(Request["CommisionMax1"]);
+            var cPercent1 = Convert.ToDouble(Request["CommisionPercent1"]);
+
+            var cMin2 = Convert.ToInt32(Request["CommisionMin2"]);
+            var cMax2 = Convert.ToInt32(Request["CommisionMax2"]);
+            var cPercent2 = Convert.ToDouble(Request["CommisionPercent2"]);
+
+            var cMin3 = Convert.ToInt32(Request["CommisionMin3"]);
+            var cMax3 = Convert.ToInt32(Request["CommisionMax3"]);
+            var cPercent3 = Convert.ToDouble(Request["CommisionPercent3"]);
+
+            var c1 = new ProductPresent();
+            c1.Min = cMin1;
+            c1.Max = cMax1;
+            c1.Percent = cPercent1;
+            c1.Product = product;
+            db.ProductPresent.Add(c1);
+
+            var c2 = new ProductPresent();
+            c2.Min = cMin2;
+            c2.Max = cMax2;
+            c2.Percent = cPercent2;
+            c2.Product = product;
+            db.ProductPresent.Add(c2);
+
+            var c3 = new ProductPresent();
+            c3.Min = cMin3;
+            c3.Max = cMax3;
+            c3.Percent = cPercent3;
+            c3.Product = product;
+            db.ProductPresent.Add(c3);
+
+            var onlyForMarketer = Request["IsOnlyForMarketer"];
+            if (onlyForMarketer != null)
             {
-                var cMin1 = Convert.ToInt32(Request["CommisionMin1"]);
-                var cMax1 = Convert.ToInt32(Request["CommisionMax1"]);
-                var cPercent1 = Convert.ToDouble(Request["CommisionPercent1"]);
-
-                var cMin2 = Convert.ToInt32(Request["CommisionMin2"]);
-                var cMax2 = Convert.ToInt32(Request["CommisionMax2"]);
-                var cPercent2 = Convert.ToDouble(Request["CommisionPercent2"]);
-
-                var cMin3 = Convert.ToInt32(Request["CommisionMin3"]);
-                var cMax3 = Convert.ToInt32(Request["CommisionMax3"]);
-                var cPercent3 = Convert.ToDouble(Request["CommisionPercent3"]);
-
-                var c1 = new ProductPresent();
-                c1.Min = cMin1;
-                c1.Max = cMax1;
-                c1.Percent = cPercent1;
-                c1.Product = product;
-                db.ProductPresent.Add(c1);
-
-                var c2 = new ProductPresent();
-                c2.Min = cMin2;
-                c2.Max = cMax2;
-                c2.Percent = cPercent2;
-                c2.Product = product;
-                db.ProductPresent.Add(c2);
-
-                var c3 = new ProductPresent();
-                c3.Min = cMin3;
-                c3.Max = cMax3;
-                c3.Percent = cPercent3;
-                c3.Product = product;
-                db.ProductPresent.Add(c3);
+                product.IsOnlyForMarketer = true;
             }
+            else
+            {
+                product.IsOnlyForMarketer = false;
+
+            }
+
 
 
             db.SaveChanges();
@@ -259,6 +269,17 @@ namespace WebApplication1.Areas.Admin.Controllers
             update.Tags = product.Tags;
             update.Category = category;
 
+            var onlyForMarketer = Request["IsOnlyForMarketer"];
+            if (onlyForMarketer != null)
+            {
+                update.IsOnlyForMarketer = true;
+            }
+            else
+            {
+                update.IsOnlyForMarketer = false;
+
+            }
+
             var img = Request.Files["Main_Image"];
             if (img.ContentLength > 0)
             {
@@ -326,7 +347,7 @@ namespace WebApplication1.Areas.Admin.Controllers
 
             }
 
-            var commision = Request["Commision"];
+
 
             var cMin1 = Convert.ToInt32(Request["CommisionMin1"]);
             var cMax1 = Convert.ToInt32(Request["CommisionMax1"]);
@@ -343,30 +364,28 @@ namespace WebApplication1.Areas.Admin.Controllers
             update.ProductPercents.Clear();
             db.ProductPresent.RemoveRange(db.ProductPresent.Where(p => p.Product.Id == product.Id));
 
-            if (commision != null)
-            {
-                var c1 = new ProductPresent();
-                c1.Min = cMin1;
-                c1.Max = cMax1;
-                c1.Percent = cPercent1;
-                c1.Product = update;
-                db.ProductPresent.Add(c1);
 
-                var c2 = new ProductPresent();
-                c2.Min = cMin2;
-                c2.Max = cMax2;
-                c2.Percent = cPercent2;
-                c2.Product = update;
-                db.ProductPresent.Add(c2);
+            var c1 = new ProductPresent();
+            c1.Min = cMin1;
+            c1.Max = cMax1;
+            c1.Percent = cPercent1;
+            c1.Product = update;
+            db.ProductPresent.Add(c1);
 
-                var c3 = new ProductPresent();
-                c3.Min = cMin3;
-                c3.Max = cMax3;
-                c3.Percent = cPercent3;
-                c3.Product = update;
-                db.ProductPresent.Add(c3);
+            var c2 = new ProductPresent();
+            c2.Min = cMin2;
+            c2.Max = cMax2;
+            c2.Percent = cPercent2;
+            c2.Product = update;
+            db.ProductPresent.Add(c2);
 
-            }
+            var c3 = new ProductPresent();
+            c3.Min = cMin3;
+            c3.Max = cMax3;
+            c3.Percent = cPercent3;
+            c3.Product = update;
+            db.ProductPresent.Add(c3);
+
 
 
 
