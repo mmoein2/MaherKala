@@ -48,7 +48,7 @@ namespace WebApplication1.Areas.Admin.Controllers.Marketer
                         link = link + "?IsAdminShow=" + 2;
                 }
             }
-            var order = data.OrderByDescending(p => p.Id).OrderBy(p => p.IsAdminShow);
+            var order = data.OrderBy(p => p.IsAdminShow).OrderByDescending(p => p.Id);
             var paged = new PagedItem<object>(order, link);
             ViewBag.Data = paged;
             return View();
