@@ -87,7 +87,7 @@ namespace WebApplication1.Controllers.api
         public object GetSpecialProduct()
         {
             return new {
-                Data = db.SpecialProducts.Include("Product").Include("Product.Category").Where(p => p.IsOnlyForMarketer == false).Where(p=>p.ExpireDate>DateTime.Now).Where(p => p.Product.Status == true).Where(p => p.ExpireDate > DateTime.Now).OrderByDescending(p => p.Id).Take(10).ToList(),
+                Data = db.SpecialProducts.Include("Product").Include("Product.Category").Where(p => p.Product.IsOnlyForMarketer == false).Where(p=>p.ExpireDate>DateTime.Now).Where(p => p.Product.Status == true).Where(p => p.ExpireDate > DateTime.Now).OrderByDescending(p => p.Id).Take(10).ToList(),
                 CurrentDate = DateTime.Now.Date,
                 Status=0
             };
