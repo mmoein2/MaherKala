@@ -67,6 +67,8 @@ namespace WebApplication1.Areas.Admin.Controllers.Marketer
                 c.Date = DateTime.Now;
                 c.Formula = data.TotalPrice+" * (0.03)";
                 c.Money = p;
+                c.MarketerFactor = data;
+                c.MarketerUser = user;
                 db.Commission.Add(c);
 
                 user.IsFirstTime = false;
