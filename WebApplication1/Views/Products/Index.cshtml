@@ -8,43 +8,43 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
-            .thumbs {
-                opacity: 0.5;
-            }
-
-            .product-item {
-                padding: 0px;
-                margin: 0px;
-            }
-
-            .product:hover {
-                transform: scale(1.05);
-                transition-duration: 0.01s;
-            }
-
-            .inline {
-                /*float: left;*/
-                margin: 10px;
-            }
-
-            .arrow {
-                font-size: 20px;
-                background: white;
-                width: 30px;
-                height: 310px;
-                position: absolute;
-                padding-top: 150px;
-            }
-
-
-
-            .cursor {
-                cursor: pointer;
-            }
-            .bootstrap-tagsinput {
-            width: 100%;
+        .thumbs {
+            opacity: 0.5;
         }
 
+        .product-item {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            transition-duration: 0.01s;
+        }
+
+        .inline {
+            /*float: left;*/
+            margin: 10px;
+        }
+
+        .arrow {
+            font-size: 20px;
+            background: white;
+            width: 30px;
+            height: 310px;
+            position: absolute;
+            padding-top: 150px;
+        }
+
+
+
+        .cursor {
+            cursor: pointer;
+        }
+
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
     </style>
     <style>
         /* Popup container - can be anything you want */
@@ -58,50 +58,60 @@
             user-select: none;
         }
 
-        /* The actual popup */
-        .popup .popuptext {
-            visibility: hidden;
-            width: 160px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -80px;
-        }
+            /* The actual popup */
+            .popup .popuptext {
+                visibility: hidden;
+                width: 160px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 8px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -80px;
+            }
 
-        /* Popup arrow */
-        .popup .popuptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
+                /* Popup arrow */
+                .popup .popuptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                }
 
-        /* Toggle this class - hide and show the popup */
-        .popup .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s;
-        }
+            /* Toggle this class - hide and show the popup */
+            .popup .show {
+                visibility: visible;
+                -webkit-animation: fadeIn 1s;
+                animation: fadeIn 1s;
+            }
 
         /* Add animation (fade in the popup) */
         @@-webkit-keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @@keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity:1 ;}
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
     </style>
     <link href="~/Css/lightbox.css" rel="stylesheet" />
@@ -109,7 +119,7 @@
 
 }
 <meta name="keywords" content="@ViewBag.Product.Tags" />
-@{ var images = ViewBag.Product.Images!=null ?ViewBag.Product.Images.Split(';'): new string[0];}
+@{ var images = ViewBag.Product.Images != null ? ViewBag.Product.Images.Split(';') : new string[0];}
 <div class="row">
 
 
@@ -130,11 +140,11 @@
                         </div>
                         @if (ViewBag.Product.Qty == 0)
                         {
-                        <div  style="color:red;padding:20px;">
-                            <div style="opacity:1;background-color:#f5f5f5;color:#9d9b9b;width:100%;border-radius:1px 5px 5px 10px;border:1px solid #ababab">
-                                ناموجود
+                            <div style="color:red;padding:20px;">
+                                <div style="opacity:1;background-color:#f5f5f5;color:#9d9b9b;width:100%;border-radius:1px 5px 5px 10px;border:1px solid #ababab">
+                                    ناموجود
+                                </div>
                             </div>
-                        </div>
                         }
                         <div style="clear:both"></div>
                         <div style="margin-top:10px">
@@ -175,6 +185,15 @@
                                         <span class="popuptext" id="myPopup" style="font-size:16px;font-family:yekan">مقایسه</span>
                                     </i>
                                 </a>
+
+                            </div>
+                            <div class="col-md-12">
+                                @foreach (var c in ViewBag.Product.Color.Split(','))
+                                {
+                                        <span style="background-color:#087ecf" class="badge badge-success badge-pill">
+                                            @c
+                                        </span>
+                                }
 
                             </div>
                             <div style="direction:rtl;margin-top:35px">
@@ -233,8 +252,8 @@
             <form method="post" action="/Factor/Store">
                 <input type="hidden" value="@ViewBag.Product.Id" name="Id" />
                 <div style="text-align:center;direction:rtl;margin-top:30px">
-                    <button type="submit" class="btn btn-primary" @if (ViewBag.Product.Qty == 0) { @String.Format("disabled")}>
-افزودن به سبد خرید
+                    <button type="submit" class="btn btn-primary" @if (ViewBag.Product.Qty == 0) { @String.Format("disabled") }>
+                        افزودن به سبد خرید
                         <i class="fa fa-cart-arrow-down"></i>
 
                     </button>

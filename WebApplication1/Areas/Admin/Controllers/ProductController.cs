@@ -84,6 +84,11 @@ namespace WebApplication1.Areas.Admin.Controllers
                 TempData["Error"] = "مبلغ را انتخاب کنید";
                 return RedirectToAction("Create");
             }
+            if (Request["Color"] == null || (Request["Color"]) == "")
+            {
+                TempData["Error"] = "رنگ را انتخاب کنید";
+                return RedirectToAction("Create");
+            }
 
             product.Status = true;
             var category_id = Request["Category_Id"];
@@ -268,7 +273,12 @@ namespace WebApplication1.Areas.Admin.Controllers
             update.Qty = product.Qty;
             update.Tags = product.Tags;
             update.Category = category;
-
+            update.Color = product.Color;
+            if(update.Color==null|| update.Color == "")
+            {
+                TempData["Error"] = "رنگ را انتخاب کنید";
+                return Redirect("/Admin/Product/Edit/" + product.Id);
+            }
             var onlyForMarketer = Request["IsOnlyForMarketer"];
             if (onlyForMarketer != null)
             {

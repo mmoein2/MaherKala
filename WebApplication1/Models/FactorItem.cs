@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public string ProductName { get; set; }
         [Required]
         public long UnitPrice { get; set; }
-
+        public string Color { get; set; }
         public Product Product { get; set; }
         public Factor Factor { get; set; }
         public FactorItem()

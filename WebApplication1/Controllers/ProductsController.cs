@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers
             ViewBag.Product = data;
             ViewBag.comments = new PagedItem<Comment>(comment, "/Products/Index?Id=" + id);
 
-            ViewBag.Random = db.Products.Where(p => p.Category.Id == data.Category.Id).Where(p => p.Id != data.Id).Where(p => p.Status == true).Where(p => p.Qty > 0).OrderBy(p => Guid.NewGuid()).Take(10).ToList();
+            ViewBag.Random = db.Products.Where(p => p.Category.Id == data.Category.Id).Where(p => p.Id != data.Id).Where(p => p.Status == true).Where(p=>p.IsOnlyForMarketer==false).Where(p => p.Qty > 0).OrderBy(p => Guid.NewGuid()).Take(10).ToList();
 
             return View();
         }

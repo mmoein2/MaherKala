@@ -43,6 +43,7 @@
                             <tr style="background-color:#e0e2dc">
                                 <th>نام محصول</th>
                                 <th>تعداد</th>
+                                <th>رنگ</th>
                                 <th>قیمت واحد</th>
                                 <th>قیمت کل</th>
                             </tr>
@@ -55,6 +56,9 @@
                                         </td>
                                         <td>
                                             @f.Qty
+                                        </td>
+                                        <td>
+                                            @f.Color
                                         </td>
                                         <td>
                                             @string.Format("{0:0,0}", f.Product.Price - f.Product.Discount)

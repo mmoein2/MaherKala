@@ -38,6 +38,14 @@ namespace WebApplication1.Controllers
             List<FactorItem> items = null;
             if (order != null)
                 items = db.FactorItems.Include("Product").Where(p => p.Factor.Id == order.Id).ToList();
+            foreach (var item in order.FactorItems)
+            {
+                if(item.Color==null)
+                {
+                    TempData["ShippingMessage"]= "رنگ "+item.ProductName+" را انتخاب کنید ";
+                    return RedirectToAction("Index");
+                }
+            }
             ViewBag.Order = order;
             ViewBag.Order_Details = items;
 
@@ -256,6 +264,53 @@ namespace WebApplication1.Controllers
             }
 
             data.Qty = Qty;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [Authorize]
+        public ActionResult ChangeColor()
+        {
+            var color =(Request["Color"]);
+
+            var fiid = Convert.ToInt32(Request["Id"]);
+            var email = User.Identity.Name;
+
+            int id = db.Users.Where(p => p.Email == email).FirstOrDefault().Id;
+            var order = db.Factors.Where(p => p.User.Id == id).Where(p => p.Status == false).FirstOrDefault();
+
+            if (order == null)
+            {
+
+                ModelState.AddModelError("", "ناموفق");
+                List<FactorItem> items = null;
+                if (order != null)
+                    items = db.FactorItems.Include("Product").Where(p => p.Factor.Id == order.Id).ToList();
+                ViewBag.Order = order;
+                ViewBag.Order_Details = items;
+                return View("Index");
+            }
+
+            var data = db.FactorItems.Include("Product.Category").Where(p => p.Factor.Id == order.Id).Where(p => p.Id == fiid).FirstOrDefault();
+            if (data == null)
+            {
+                ModelState.AddModelError("", "ناموفق");
+                List<FactorItem> items = null;
+                if (order != null)
+                    items = db.FactorItems.Include("Product").Where(p => p.Factor.Id == order.Id).ToList();
+                ViewBag.Order = order;
+                ViewBag.Order_Details = items;
+                return View("Index");
+            }
+
+
+            foreach (var item in data.Product.Color.Split(','))
+            {
+                if (item == color)
+                {
+                    data.Color = color;
+                    break;
+                }
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
