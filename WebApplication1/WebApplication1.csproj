@@ -220,6 +220,7 @@
     <Compile Include="Controllers\api\CategoryController.cs" />
     <Compile Include="Controllers\api\FactorController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerChatController.cs" />
+    <Compile Include="Controllers\api\Marketer\MarketerCommisionController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerFactorController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerNewsController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
