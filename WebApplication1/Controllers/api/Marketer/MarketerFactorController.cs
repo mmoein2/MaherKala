@@ -160,12 +160,12 @@ namespace WebApplication1.Controllers.api.Marketer
             var token = HttpContext.Current.Request.Form["Api_Token"];
             int id = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault().Id;
 
-            var data = db.MarketerFactor.Where(p => p.Status == 0 || p.Status == 2).Where(p => p.MarketerUser.Id == id).OrderByDescending(p => p.Id)
-                .Select(p => new { p.Id, p.Date, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Status, p.TotalPrice }).ToList();
+            var data = db.MarketerFactor.Where(p => p.Status == 0 || p.Status == 2).Where(p => p.MarketerUser.Id == id)
+                .Select(p => new { p.Id, p.Date, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Status, p.TotalPrice }).OrderByDescending(p => p.Id);
             return new
             {
                 Message = 0,
-                Data = data
+                Data = new PagedItem<object>(data, "")
             };
         }
 
