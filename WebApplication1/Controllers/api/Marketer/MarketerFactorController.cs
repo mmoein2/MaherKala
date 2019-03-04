@@ -157,11 +157,31 @@ namespace WebApplication1.Controllers.api.Marketer
 
         public object History()
         {
+
             var token = HttpContext.Current.Request.Form["Api_Token"];
             int id = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault().Id;
 
-            var data = db.MarketerFactor.Where(p => p.Status == 0 || p.Status == 2).Where(p => p.MarketerUser.Id == id)
-                .Select(p => new { p.Id, p.Date, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Status, p.TotalPrice }).OrderByDescending(p => p.Id);
+            var query = db.MarketerFactor.Where(p => p.Status == 0 || p.Status == 2).Where(p => p.MarketerUser.Id == id);
+            var sdate= HttpContext.Current.Request.Form["StartDate"];
+            var edate = HttpContext.Current.Request.Form["EndDate"];
+
+            
+
+            if (sdate!=null)
+            {
+                System.DateTime sdateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+                sdateTime = sdateTime.AddMilliseconds(Convert.ToInt64(sdate));
+
+                query = query.Where(p=>p.Date>=sdateTime);
+            }
+            if (edate!= null)
+            {
+                System.DateTime edateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+                edateTime = edateTime.AddMilliseconds(Convert.ToInt64(edate));
+
+                query = query.Where(p => p.Date <= edateTime);
+            }
+            var data=query.Select(p => new { p.Id, p.Date, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Status, p.TotalPrice }).OrderByDescending(p => p.Id);
             return new
             {
                 Message = 0,
