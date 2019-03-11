@@ -8,8 +8,8 @@ namespace WebApplication1.Models
 {
     public class DBContext: DbContext
     {
-        public DBContext() : base("Data Source=.;Initial Catalog=cp33105_db;Integrated Security=true")
-        //public DBContext() : base("Data Source=.;Initial Catalog=sarzami1_shop;User Id=sarzami1_shopusr;Password=Amir@amir$amir2;")
+        //public DBContext() : base("Data Source=.;Initial Catalog=cp33105_db;Integrated Security=true")
+        public DBContext() : base("Data Source=.;Initial Catalog=sarzami1_shop;User Id=sarzami1_shopusr;Password=Amir@amir$amir2;")
         {
             this.Configuration.ProxyCreationEnabled = false;
             this.Configuration.LazyLoadingEnabled = false;   

@@ -14,19 +14,33 @@ namespace WebApplication1.Controllers.api.Marketer
         DBContext db = new DBContext();
         [HttpGet]
         [Route("api/MarketerNews/GetNews")]
-        [MarketerAuthorize]
+        //[MarketerAuthorize]
         public object GetNews()
         {
+            var token = System.Web.HttpContext.Current.Request.QueryString["Api_Token"];
+            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            if(usr==null)
+            {
+                return new {Message="UnAuthorized" };
+            }
+
             var data = db.MarketerNews.OrderByDescending(p=>p.Id);
             var paged = new PagedItem<MarketerNews>(data,"/api/MarketerNews/GetNews");
             return new { Data = paged, Message = 0};
 
         }
         [HttpGet]
-        [MarketerAuthorize]
+        //[MarketerAuthorize]
         [Route("api/MarketerNews/GetPrizes")]
         public object GetPrizes()
         {
+            var token = System.Web.HttpContext.Current.Request.QueryString["Api_Token"];
+            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            if (usr == null)
+            {
+                return new { Message = "UnAuthorized" };
+            }
+
             var data = db.MarketerPrizes.OrderByDescending(p => p.Id);
             var paged = new PagedItem<MarketerPrize>(data, "/api/MarketerNews/GetPrizes");
             return new { Data = paged, Message = 0 };

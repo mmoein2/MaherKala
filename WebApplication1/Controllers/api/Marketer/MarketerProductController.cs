@@ -15,9 +15,9 @@ namespace WebApplication1.Controllers.api.Marketer
         [HttpGet]
         [Route("api/Product/MarketerProduct/GetProduct")]
 
-        public object GetProduct(int id)
+        public object GetProduct()
         {
-
+            int id =Convert.ToInt32(HttpContext.Current.Request.QueryString["Id"]);
             var data = db.Products.Include("Category").Where(p => p.Status == true).Where(p => p.Id == id).FirstOrDefault();
             return new
             {

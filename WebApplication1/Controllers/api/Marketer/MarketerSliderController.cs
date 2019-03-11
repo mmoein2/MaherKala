@@ -13,9 +13,16 @@ namespace WebApplication1.Controllers.api.Marketer
     {
         DBContext db = new DBContext();
         [HttpGet]
-        [MarketerAuthorize]
+        //[MarketerAuthorize]
         public object GetSliders()
         {
+            var token = System.Web.HttpContext.Current.Request.QueryString["Api_Token"];
+            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            if (usr == null)
+            {
+                return new { Message = "UnAuthorized" };
+            }
+
             var list = new {Message=0, Data = db.MarketerSliders.ToList() };
             return list;
         }
