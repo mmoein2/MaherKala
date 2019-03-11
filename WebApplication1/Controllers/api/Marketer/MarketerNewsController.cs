@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers.api.Marketer
         }
         [HttpGet]
         //[MarketerAuthorize]
-        [Route("api/MarketerNews/GetPrizes")]
+        [Route("api/MarketerPrizes/GetPrizes")]
         public object GetPrizes()
         {
             var token = System.Web.HttpContext.Current.Request.QueryString["Api_Token"];

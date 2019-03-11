@@ -207,6 +207,8 @@
     <Compile Include="Areas\Admin\Controllers\MarketerSliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\Marketer\CommisionController.cs" />
     <Compile Include="Areas\Admin\Controllers\Marketer\MarketerFactorsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Marketer\MarketerNewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Marketer\MarketerPrizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\Marketer\MarketerUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\MobileSliderController.cs" />
@@ -399,6 +401,12 @@
     <Content Include="Areas\Admin\Views\MarketerFactors\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MarketerFactors\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Commision\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerNews\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerNews\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerNews\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerPrizes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerPrizes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MarketerPrizes\Index.cshtml" />
     <None Include="Properties\PublishProfiles\book.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -443,6 +451,7 @@
     <Folder Include="editor\" />
     <Folder Include="files\" />
     <Folder Include="Upload\" />
+    <Folder Include="Views\MarketerPrize\" />
     <Folder Include="Views\Slider\" />
   </ItemGroup>
   <PropertyGroup>
