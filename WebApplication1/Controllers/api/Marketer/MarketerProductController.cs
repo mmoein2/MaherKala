@@ -29,8 +29,10 @@ namespace WebApplication1.Controllers.api.Marketer
         [HttpPost]
         [Route("api/Product/MarketerProduct/GetProducts")]
 
-        public PagedItem<Product> GetProducts()
+        public object GetProducts()
         {
+            long MaxPrice = 0;
+            long MinPrice = 0;
             var data = db.Products.Include("Category").Where(p => p.Status == true).AsQueryable();
             if (HttpContext.Current.Request.Form.AllKeys.Contains("status"))
             {
@@ -69,10 +71,23 @@ namespace WebApplication1.Controllers.api.Marketer
                 }
 
                 data = data.Where(p => list.Contains(p.Category.Id));
+                MinPrice = db.Products.Where(p => list.Contains(p.Category.Id)).Min(p => p.Price);
+                MaxPrice = db.Products.Where(p => list.Contains(p.Category.Id)).Max(p => p.Price);
+            }
+            else
+            {
+                MinPrice = db.Products.Min(p => p.Price);
+                MaxPrice = db.Products.Max(p => p.Price);
             }
 
-            var result = data.OrderByDescending(p => p.Id);
-            return new PagedItem<Product>(result, "");
+            var res = data.OrderByDescending(p => p.Id);
+            var Result = new PagedItem<Product>(res, "");
+            return new
+            {
+                MinPrice =MinPrice,
+                MaxPrice =MaxPrice,
+                Result
+            };
         }
     }
 }

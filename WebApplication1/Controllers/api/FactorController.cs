@@ -43,6 +43,7 @@ namespace WebApplication1.Controllers.api
                 order.Mobile = order.User.Mobile;
                 //order.User_PostalCode= order.User.PostalCode;
                 order.IsAdminShow = false;
+                order.Discount_Amount = 0;
 
                 var detail = new FactorItem();
                 detail.Product = product;
@@ -111,7 +112,7 @@ namespace WebApplication1.Controllers.api
             {
                 Message = 0,
                 Date = order.Date,
-                Items = order.FactorItems.Select(p => new { p.Id, UnitPrice = p.Product.Price, p.Qty, ProductName = p.Product.Name, p.Product.Main_Image, p.Product.Thumbnail })
+                Items = order.FactorItems.Select(p => new { p.Id, UnitPrice = p.Product.Price-p.Product.Discount, p.Qty, ProductName = p.Product.Name, p.Product.Main_Image, p.Product.Thumbnail })
                 // Items = items
             };
         }
@@ -181,38 +182,6 @@ namespace WebApplication1.Controllers.api
         }
 
         [HttpPost]
-        [Route("api/Factor/Finalize")]
-        [ApiAuthorize]
-
-        public object Finalize()
-        {
-            var token = HttpContext.Current.Request.Form["Api_Token"];
-            int id = db.Users.Where(p => p.Api_Token == token).FirstOrDefault().Id;
-            var factor = db.Factors.Include("FactorItems.Product.Category").Where(p => p.Status == false).Where(p => p.User.Id == id).FirstOrDefault();
-            if (factor == null)
-            {
-                return new { Message = 1 };
-            }
-            List<object> Empty = new List<object>();
-            foreach (var item in factor.FactorItems)
-            {
-                item.UnitPrice = item.Product.Price - item.Product.Discount;
-                item.ProductName = item.Product.Name;
-                if (item.Product.Qty < item.Qty)
-                    Empty.Add(new { Detail="محصول " + item.Product.Name+" به تعداد انتخابی شما وجود ندارد"});
-            }
-            if(Empty.Count>0)
-                return new { Message = 2, Empty };
-            factor.TotalPrice = factor.ComputeTotalPrice()+15000;
-            factor.Status = true;
-            factor.Date = DateTime.Now;
-            db.SaveChanges();
-
-            return new { Message = 0 };
-        }
-
-
-        [HttpPost]
         [Route("api/Factor/ChangeQty")]
         [ApiAuthorize]
 
@@ -241,7 +210,6 @@ namespace WebApplication1.Controllers.api
             }
 
             data.Qty = Qty;
-            data.Product.Qty -= Qty;
             db.SaveChanges();
             return new { Message = 0 };
 

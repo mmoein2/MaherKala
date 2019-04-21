@@ -12,7 +12,7 @@
         <div style="text-align:right;direction:rtl;color:red">
 @TempData["Errors"]
         </div>
-            <form action="/Factor/Finalize" method="get">
+            <form id="b" action="/Factor/Finalize" method="get">
                 <div style="direction:rtl;margin-top:20px" class="form-inline">
                     <div class="form-group" style="direction:rtl;margin:10px">
                         <label for="exampleInputEmail1" style="float:right">نام دریافت کننده : </label>
@@ -30,6 +30,15 @@
                         <label for="exampleInputEmail1" style="float:right">کدپستی : </label>
                         <input value="@ViewBag.User.PostalCode" name="PostalCode" class="form-control">
                     </div>
+                </div>
+                <div class="form-group" style="margin:10px">
+                    <label for="exampleInputPassword1" style="float:right">شهر</label>
+                    <select onchange="change_city(this)" style="width:100%;direction:rtl" name="City_Id">
+                        <option value="0">انتخاب کنید</option>
+                        <option value="1">اصفهان</option>
+                        <option value="2">نجف آباد</option>
+                        <option value="3">سایر شهر ها</option>
+                    </select>
                 </div>
                 <div class="form-group" style="margin:10px">
                     <label for="exampleInputPassword1" style="float:right">آدرس</label>
@@ -84,8 +93,26 @@
                             <span>هزینه ارسال</span>
                         </div>
                         <div class="col-md-6" style="text-align:left">
-                                @string.Format("{0:0,0}", 15000)
+                            <span id="transportation_fee">
+
+                                0
+                            </span>
+                            <small>
                                 تومان
+                            </small>
+                        </div>
+                        <hr />
+                        <div class="col-md-6" style="text-align:right">
+                            <span>تخفیف</span>
+                        </div>
+                        <div class="col-md-6" style="text-align:left">
+                            <span>
+
+                                @ViewBag.order.Discount_Amount
+                            </span>
+                            <small>
+                                تومان
+                            </small>
                         </div>
                         <hr />
                         <div class="col-md-6" style="text-align:right">
@@ -93,7 +120,7 @@
                         </div>
                         <div class="col-md-6" style="text-align:left">
                             <b>
-                                @string.Format("{0:0,0}", ViewBag.Order.ComputeTotalPrice()+15000)
+                                @string.Format("{0:0,0}", ViewBag.Order.ComputeTotalPrice2())
                                 تومان
 
                             </b>
@@ -102,9 +129,20 @@
                     </div>
 
                 }
+                </form>
+        <form action="/Factor/Shipping" method="get">
+            <div class="form-group" style="margin:10px">
 
+                <label for="exampleInputPassword1" style="float:right">کد تخفیف</label>
+                <input value="@ViewBag.Order.Discount_Code" name="DiscountCode" class="form-control" style="width:100%">
+                <button class="btn btn-primary" style="float:left;margin-top:5px">
+                    اعمال
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+        </form>
                 <div style="margin-top:30px;text-align:center">
-                    <button type="submit" class="btn btn-success">
+                    <button onclick="b.submit()"  class="btn btn-success">
                         <i class="fa fa-check"></i>
                         پرداخت صورت حساب
                     </button>
@@ -113,3 +151,34 @@
         </div>
 
 </div>
+<script src="/Js/NumberFormat.js"></script>
+<script>
+
+    var esf = @ViewBag.Esfahan;
+    var naj = @ViewBag.Najafabad;
+    var other = @ViewBag.Other;
+    var total = @ViewBag.Order.ComputeTotalPrice2();
+    function change_city(t)
+    {
+        if(t.value == 1)
+        {
+            transportation_fee.innerHTML=numeral(esf).format('0,0');
+            TotalPrice.innerHTML = numeral(total+esf).format('0,0');
+        }
+        else if(t.value==2)
+        {
+            transportation_fee.innerHTML=numeral(naj).format('0,0');
+            TotalPrice.innerHTML = numeral(total+naj).format('0,0');
+        }
+        else if(t.value==3)
+        {
+            transportation_fee.innerHTML=numeral(other).format('0,0');
+            TotalPrice.innerHTML = numeral(total+other).format('0,0');
+        }
+        else if(t.value==0)
+        {
+            transportation_fee.innerHTML=0;
+            TotalPrice.innerHTML = numeral(total).format('0,0');
+        }
+    }
+</script>

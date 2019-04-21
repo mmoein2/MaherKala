@@ -12,5 +12,6 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public string Key { get; set; }
         public User User { get; set; }
+        public bool IsUsed { get; set; }
     }
 }

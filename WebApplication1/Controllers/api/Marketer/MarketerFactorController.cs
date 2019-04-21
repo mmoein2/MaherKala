@@ -134,7 +134,7 @@ namespace WebApplication1.Controllers.api.Marketer
             int id = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault().Id;
             var order = db.MarketerFactor.Include("MarketerFactorItems.Product").Where(p => p.MarketerUser.Id == id).Where(p => p.Status == 1)
                 .Select(p => new
-                { p.Id, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Date, Items = p.MarketerFactorItems.Select(a => new { a.Product.Id, a.Qty, a.UnitPrice, a.ProductName, a.Product.Images, a.Product.Thumbnail }) }
+                { p.Id, p.Buyer, p.BuyerAddress, p.BuyerMobile, p.BuyerPhoneNumber, p.BuyerPostalCode, p.Date, Items = p.MarketerFactorItems.Select(a => new { Id=a.Id, Product_Id=a.Product.Id, a.Qty, UnitPrice = a.Product.Price-a.Product.Discount, a.ProductName, a.Product.Images, a.Product.Thumbnail }) }
             ).ToList();
             if (order == null)
             {
@@ -247,34 +247,35 @@ namespace WebApplication1.Controllers.api.Marketer
 
         public object Finalize()
         {
-            var tr = db.Database.BeginTransaction();
-            var token = HttpContext.Current.Request.Form["Api_Token"];
-            var fid = Convert.ToInt32(HttpContext.Current.Request.Form["Factor_Id"]);
+            return null;
+            //var tr = db.Database.BeginTransaction();
+            //var token = HttpContext.Current.Request.Form["Api_Token"];
+            //var fid = Convert.ToInt32(HttpContext.Current.Request.Form["Factor_Id"]);
 
-            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
-            int id = usr.Id;
-            var factor = db.MarketerFactor.Include("MarketerFactorItems.Product.Category").Where(p => p.Id == fid).Where(p => p.Status == 1).Where(p => p.MarketerUser.Id == id).FirstOrDefault();
-            if (factor == null)
-            {
-                return new { Message = 1 };
-            }
-            List<object> Empty = new List<object>();
-            foreach (var item in factor.MarketerFactorItems)
-            {
-                item.UnitPrice = item.Product.Price - item.Product.Discount;
-                item.ProductName = item.Product.Name;
-                if (item.Product.Qty < item.Qty)
-                    Empty.Add(new { Detail = "محصول " + item.Product.Name + " به تعداد انتخابی شما وجود ندارد" });
-            }
-            if (Empty.Count > 0)
-                return new { Message = 2, Empty };
-            factor.TotalPrice = factor.ComputeTotalPrice() + 15000;
-            factor.Status = 0;
-            factor.Date = DateTime.Now;
-            usr.FactorCounter--;
-            db.SaveChanges();
-            tr.Commit();
-            return new { Message = 0 };
+            //var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            //int id = usr.Id;
+            //var factor = db.MarketerFactor.Include("MarketerFactorItems.Product.Category").Where(p => p.Id == fid).Where(p => p.Status == 1).Where(p => p.MarketerUser.Id == id).FirstOrDefault();
+            //if (factor == null)
+            //{
+            //    return new { Message = 1 };
+            //}
+            //List<object> Empty = new List<object>();
+            //foreach (var item in factor.MarketerFactorItems)
+            //{
+            //    item.UnitPrice = item.Product.Price - item.Product.Discount;
+            //    item.ProductName = item.Product.Name;
+            //    if (item.Product.Qty < item.Qty)
+            //        Empty.Add(new { Detail = "محصول " + item.Product.Name + " به تعداد انتخابی شما وجود ندارد" });
+            //}
+            //if (Empty.Count > 0)
+            //    return new { Message = 2, Empty };
+            //factor.TotalPrice = factor.ComputeTotalPrice() + 15000;
+            //factor.Status = 0;
+            //factor.Date = DateTime.Now;
+            //usr.FactorCounter--;
+            //db.SaveChanges();
+            //tr.Commit();
+            //return new { Message = 0 };
         }
 
         [HttpPost]
@@ -293,11 +294,10 @@ namespace WebApplication1.Controllers.api.Marketer
             {
                 return new { Message = 1 };
             }
-
-            var data = db.MarketerFactorItem.Include("Product.Category").Where(p => p.MarketerFactor.Id == order.Id).Where(p => p.Id == item_id).FirstOrDefault();
+            var data = db.MarketerFactorItem.Include("Product.Category").Where(p => p.MarketerFactor.Id == factor_id && p.Id == item_id).FirstOrDefault();
             if (data == null)
             {
-                return new { Message = 1 };
+                return new { Message = 11 };
             }
 
             //data.Product.Qty += data.Qty;
@@ -312,6 +312,38 @@ namespace WebApplication1.Controllers.api.Marketer
             return new { Message = 0 };
 
         }
+
+        [HttpPost]
+        [Route("api/MarketerFactor/GetReturned")]
+        [MarketerAuthorize]
+
+        public object GetReturned()
+        {
+            var token = HttpContext.Current.Request.Form["Api_Token"];
+
+            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            var id = usr.Id;
+
+            var money = db.MarketerFactor.Where(p=>p.MarketerUser.Id==id).Where(a => a.Status == 2).Select(c=>c.TotalPrice).DefaultIfEmpty(0).Sum();
+            return new { Message = 0,Price=money };
+        }
+
+        [HttpPost]
+        [Route("api/MarketerFactor/GetPaid")]
+        [MarketerAuthorize]
+
+        public object GetPaid()
+        {
+            var token = HttpContext.Current.Request.Form["Api_Token"];
+
+            var usr = db.MarketerUsers.Where(p => p.Api_Token == token).FirstOrDefault();
+            var id = usr.Id;
+
+            var money = db.MarketerFactor.Where(p=>p.MarketerUser.Id==id).Where(a => a.Status == 0).Sum(p => p.TotalPrice);
+            return new { Message = 0, Price = money };
+        }
+
+
 
 
     }

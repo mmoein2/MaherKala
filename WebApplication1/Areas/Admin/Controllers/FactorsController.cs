@@ -53,6 +53,10 @@ namespace WebApplication1.Areas.Admin.Controllers
             data.IsAdminShow = true;
             db.SaveChanges();
             ViewBag.Data = data;
+
+            var d = db.Payments.Where(p => p.Factor.Id == id).OrderByDescending(p => p.Id);
+            var paged = new PagedItem<Payment>(d, "/admin/Factors/Detail/" + id, 20);
+            ViewBag.Payments = paged;
             return View();
         }
     }

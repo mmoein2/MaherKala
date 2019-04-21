@@ -110,6 +110,7 @@
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -190,6 +191,37 @@
     <Content Include="Js\editor.js" />
     <Content Include="Js\jquery.tinymce.min.js" />
     <Content Include="Js\kamadatepicker.min.js" />
+    <None Include="Service References\BankToken\service.wsdl" />
+    <Content Include="Js\NumberFormat.js" />
+    <Content Include="Service References\BankToken\WebApplication1.BankToken.tokenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\BankVerify\service.wsdl" />
+    <Content Include="Service References\BankVerify\WebApplication1.BankVerify.CardModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BankVerify\WebApplication1.BankVerify.transactionModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\SmsService\SendService.disco" />
+    <None Include="Service References\SmsService\configuration91.svcinfo" />
+    <None Include="Service References\SmsService\configuration.svcinfo" />
+    <None Include="Service References\SmsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BankToken\configuration91.svcinfo" />
+    <None Include="Service References\BankToken\configuration.svcinfo" />
+    <None Include="Service References\BankToken\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BankVerify\configuration91.svcinfo" />
+    <None Include="Service References\BankVerify\configuration.svcinfo" />
+    <None Include="Service References\BankVerify\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +242,7 @@
     <Compile Include="Areas\Admin\Controllers\Marketer\MarketerNewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Marketer\MarketerPrizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\Marketer\MarketerUserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\MobileSliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
@@ -217,6 +250,8 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteSliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\SpecialProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TransportationFeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WholeSalersController.cs" />
     <Compile Include="Controllers\api\CategoryController.cs" />
@@ -229,15 +264,18 @@
     <Compile Include="Controllers\api\Marketer\MarketerSliderController.cs" />
     <Compile Include="Controllers\api\Marketer\MarketerUserController.cs" />
     <Compile Include="Controllers\api\NewsController.cs" />
+    <Compile Include="Controllers\api\PaymentController.cs" />
     <Compile Include="Controllers\api\ProductController.cs" />
     <Compile Include="Controllers\api\SettingController.cs" />
     <Compile Include="Controllers\api\SliderController.cs" />
+    <Compile Include="Controllers\api\UpdateController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\api\WholeSalerController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\FactorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ShowNewsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -270,6 +308,7 @@
     <Compile Include="Models\Members.cs" />
     <Compile Include="Models\MarketerPrize.cs" />
     <Compile Include="Models\News.cs" />
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductPresent.cs" />
     <Compile Include="Models\Role.cs" />
@@ -278,6 +317,7 @@
     <Compile Include="Models\MobileSlider.cs" />
     <Compile Include="Models\SiteSlider.cs" />
     <Compile Include="Models\SpecialProduct.cs" />
+    <Compile Include="Models\Update.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserComment.cs" />
     <Compile Include="Models\UserProduct.cs" />
@@ -289,6 +329,21 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\BankToken\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\BankVerify\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SmsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Utility\SendEmail.cs" />
     <Compile Include="Utility\ImageResizer.cs" />
@@ -407,6 +462,9 @@
     <Content Include="Areas\Admin\Views\MarketerPrizes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MarketerPrizes\Create.cshtml" />
     <Content Include="Areas\Admin\Views\MarketerPrizes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TransportationFee\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Update\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Update\Create.cshtml" />
     <None Include="Properties\PublishProfiles\book.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -437,6 +495,48 @@
     <Content Include="Views\Complaint\Create.cshtml" />
     <Content Include="Views\Errors\ShowErrors.cshtml" />
     <Content Include="Views\Factor\Shipping.cshtml" />
+    <None Include="Service References\SmsService\SendService.wsdl" />
+    <None Include="Service References\SmsService\SendService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SmsService\SendService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SmsService\SendService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SmsService\SendService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SmsService\SendService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SmsService\SendService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.ExtractTelecomBlacklistNumbersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.GetBatchDeliveryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.GetDeliveryLikeToLikeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.MessageInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.SendBatchSmsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.SendSmsLikeToLikeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsService\WebApplication1.SmsService.SendSMSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Views\Payment\RedirectToBank.cshtml" />
+    <Content Include="Views\Payment\Pay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -448,11 +548,20 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Marketer\" />
+    <Folder Include="Areas\Admin\Views\Payments\" />
     <Folder Include="editor\" />
     <Folder Include="files\" />
     <Folder Include="Upload\" />
     <Folder Include="Views\MarketerPrize\" />
     <Folder Include="Views\Slider\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BankToken\" />
+    <WCFMetadataStorage Include="Service References\BankVerify\" />
+    <WCFMetadataStorage Include="Service References\SmsService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -161,5 +161,14 @@ namespace WebApplication1.Controllers.api.Marketer
             }
             return new { StatusCode = 0, Api_Token= user.Api_Token };
         }
+
+        [HttpPost]
+        [Route("api/MarketerUser/ShowProfile")]
+        public object ShowProfile()
+        {
+            var token = HttpContext.Current.Request.Form["Api_Token"];
+            var user = db.MarketerUsers.Where(p => p.Api_Token == token).Select(p => new { p.Id, p.Address,p.AccountNumber,p.CardAccountNumber,p.CertificateNumber,p.Description,p.IBNA,p.IDCardNumber,p.IDCardPhotoAddress,p.IsMarrid,p.LastName,p.Lat,p.Lng,p.Mobile,p.Name,p.Parent_Id,p.Phone}).FirstOrDefault();
+            return user;
+        }
     }
 }

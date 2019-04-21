@@ -153,7 +153,6 @@ namespace WebApplication1.Areas.Admin.Controllers
             db.Products.Add(product);
 
             var commision = Request["Commision"];
-
             var cMin1 = Convert.ToInt32(Request["CommisionMin1"]);
             var cMax1 = Convert.ToInt32(Request["CommisionMax1"]);
             var cPercent1 = Convert.ToDouble(Request["CommisionPercent1"]);

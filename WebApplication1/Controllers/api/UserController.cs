@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using WebApplication1.Filter;
 using WebApplication1.Models;
+using WebApplication1.SmsService;
 using WebApplication1.Utility;
 
 namespace WebApplication1.Controllers.api
@@ -50,47 +51,61 @@ namespace WebApplication1.Controllers.api
 
             user.Status = true;
 
-            if (setting.Email == null || setting.Email == "")
-            {
-                user.LinkStatus = true;
-
-            }
-            else
-            {
+            
                 user.LinkStatus = false;
 
                 SendEmail s = new Utility.SendEmail(setting);
-                string key = Guid.NewGuid().ToString().Replace('-', '0');
-                ConfirmEmail c = new ConfirmEmail();
+            string key = Guid.NewGuid().ToString().Replace('-', '0').Substring(0, 4);
+            ConfirmEmail c = new ConfirmEmail();
                 c.Key = key;
                 c.User = user;
                 db.ConfirmEmails.Add(c);
-                db.SaveChanges();
-                var list = new List<string>();
-                list.Add(user.Email);
-                try
-                {
-                    s.Send("لینک فعالسازی <br> برروی <a target='_blank' href='" + setting.Domain + "/User/ActiveLink/" + key + "'>این لینک</a> جهت فعالسازی حساب کاربری خود کلیک کنید", "لینک فعالسازی", list);
-                }
-                catch
-                {
+                
 
-                }
-            }
-
-            user.Api_Token = Guid.NewGuid().ToString().Replace('-', '0');
+            user.Api_Token = Guid.NewGuid().ToString().Replace('-', '0').Substring(0,4);
             user.Password = DevOne.Security.Cryptography.BCrypt.BCryptHelper.HashPassword(Password, DevOne.Security.Cryptography.BCrypt.BCryptHelper.GenerateSalt());
             user.Email = Email;
             user.Fullname = Fullname;
             user.Address = Address;
             user.PhoneNumber = PhoneNumber;
             db.Users.Add(user);
+             SendServiceClient sms = new SmsService.SendServiceClient();
+            long[] recId = null;
+            byte[] status = null;
+            int res = sms.SendSMS("m.atrincom.com", "61758", "10009611", new string[] { user.Mobile.ToString() }, c.Key, false, ref recId, ref status);
+            sms.Close();
+            if(res==0)
+                db.SaveChanges();
+            else
+                return new
+                {
+                    Message = "امکان ثبت نام وجود ندارد"
+                };
             db.SaveChanges();
             return new
             {
                 Message = 0
             };
 
+
+        }
+        [HttpPost]
+        [Route("api/User/VerifyToken")]
+        public object VerifyToken()
+        {
+            string token = HttpContext.Current.Request.Form["Token"];
+            var c = db.ConfirmEmails.Include("User").Where(p => p.IsUsed == false && p.Key == token).OrderByDescending(p => p.Id).FirstOrDefault();
+            if (c == null)
+            {
+                return new { StatusCode = 1 };
+            }
+            else
+            {
+                c.User.LinkStatus = true;
+                c.IsUsed = true;
+                db.SaveChanges();
+            }
+            return new { StatusCode = 0 };
 
         }
         [HttpPost]
@@ -115,6 +130,24 @@ namespace WebApplication1.Controllers.api
             }
             if (data.LinkStatus == false)
             {
+                string key = Guid.NewGuid().ToString().Replace('-', '0').Substring(0, 4);
+                ConfirmEmail c = new ConfirmEmail();
+                c.Key = key;
+                c.User = data;
+                db.ConfirmEmails.Add(c);
+                SendServiceClient sms = new SmsService.SendServiceClient();
+                long[] recId = null;
+                byte[] status = null;
+                int res = sms.SendSMS("m.atrincom.com", "61758", "10009611", new string[] { data.Mobile.ToString() }, c.Key, false, ref recId, ref status);
+
+
+                // }
+                sms.Close();
+                if (res == 0)
+                    db.SaveChanges();
+                else
+                    return new { Message = -4 };
+
                 return new { Message = 4 };
             }
             return new
@@ -158,7 +191,7 @@ namespace WebApplication1.Controllers.api
         public object ShowProfile()
         {
             var token = HttpContext.Current.Request.Form["Api_Token"];
-            var user = db.Users.Where(p => p.Api_Token == token).Select(p => new { p.Address, p.Fullname, p.Email, p.Mobile, p.PhoneNumber, p.PostalCode }).FirstOrDefault();
+            var user = db.Users.Where(p => p.Api_Token == token).Select(p => new {p.Id, p.Address, p.Fullname, p.Email, p.Mobile, p.PhoneNumber, p.PostalCode }).FirstOrDefault();
             return user;
         }
         [HttpPost]

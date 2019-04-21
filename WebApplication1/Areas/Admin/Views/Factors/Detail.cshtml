@@ -10,13 +10,13 @@
             <a href="/Admin/Factors/Index" class="btn btn-sm btn-info btn-flat pull-left">بازگشت</a>
             <button onclick="printPage()" class="btn btn-sm btn-success btn-flat pull-left">چاپ صفحه</button>
         </div>
-        <h3 class="box-title">مشخصات</h3>
+        <h3 class="box-title">مشخصات فاکتور</h3>
         <hr>
         <div class="row">
             <div class="col-md-4">
                 <span>خریدار : </span>
                 <span name="name" type="text" id="aaa">
-                   @ViewBag.Data.Buyer
+                    @ViewBag.Data.Buyer
                 </span>
             </div>
             <div class="col-md-4">
@@ -28,7 +28,7 @@
             <div class="col-md-4">
                 <span>تاریخ : </span>
                 <span name="name" type="text" id="">
-                   @ShamsiDate.ToShamsi(ViewBag.Data.Date)
+                    @ShamsiDate.ToShamsi(ViewBag.Data.Date)
                 </span>
             </div>
             <div class="col-md-12" style="margin-top:15px">
@@ -49,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var detail in ViewBag.Data.FactorItems    )
+                    @foreach (var detail in ViewBag.Data.FactorItems)
                     {
                         <tr>
                             <td>
@@ -59,24 +59,72 @@
                                 @detail.Qty
                             </td>
                             <td>
-                                @String.Format("{0:0,0}",detail.UnitPrice)
+                                @String.Format("{0:0,0}", detail.UnitPrice)
                             </td>
                             <td>
-                                @String.Format("{0:0,0}",((detail.UnitPrice * detail.Qty)))
+                                @String.Format("{0:0,0}", ((detail.UnitPrice * detail.Qty)))
                             </td>
                         </tr>
-                        }
+                    }
                     <tr>
                         <td colspan="3"><b>جمع کل  </b></td>
-                        <td><b>@String.Format("{0:0,0}",ViewBag.Data.TotalPrice)</b></td>
+                        <td><b>@String.Format("{0:0,0}", ViewBag.Data.TotalPrice)</b></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- /.table-responsive -->
     </div>
-    <!-- /.box-body -->
-    <!-- /.box-footer -->
+</div>
+<!-- /.box-body -->
+<!-- /.box-footer -->
+<div class="box">
+    <div class="box-body" style="margin-top:20px">
+        <h3 class="box-title">تراکنش ها</h3>
+        <div class="table-responsive">
+            <table class="table no-margin">
+                <thead>
+                    <tr>
+                        <th>مبلغ تراکنش</th>
+                        <th>کاربر</th>
+                        <th>فاکتور</th>
+                        <th>شماره پیگیری</th>
+                        <th>شماره پرداخت</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var payment in ViewBag.Payments.Data)
+                    {
+                        <tr>
+                            <td>
+                                @payment.Amount
+                            </td>
+                            <td>
+                                @payment.User.Fullname
+                            </td>
+                            <td>
+                                @payment.Factor.Id
+                            </td>
+                            <td>
+                                @payment.ReferenceNumber
+                            </td>
+                            <td>
+                                @payment.SaleReferenceId
+                            </td>
+                            <td>
+                                @payment.StatusPayment
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+        @Html.Raw(ViewBag.Payments.GetLinks())
+
+
+    </div>
 </div>
 
 @section footer

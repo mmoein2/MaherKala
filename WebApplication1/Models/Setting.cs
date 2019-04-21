@@ -28,5 +28,8 @@ namespace WebApplication1.Models
         public string HostName { get; set; }
         public string Domain{ get; set; }
         public string SiteName { get; set; }
+        public int? TransportationEsfahan { get; set; }
+        public int? TransportationNajafabad { get; set; }
+        public int? TransportationOther { get; set; }
     }
 }

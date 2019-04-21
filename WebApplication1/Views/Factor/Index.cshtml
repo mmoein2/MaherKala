@@ -89,21 +89,15 @@
             }
             <div class="row" style="background-color:white;border:1px solid #e7e7e7;text-align:right;box-shadow:2px 3px #e7e7e7;margin-bottom:5px;padding:10px">
 
-                <div class="col-md-6" style="text-align:right">
-                    <span>هزینه ارسال</span>
-                </div>
-                <div class="col-md-6" style="text-align:left">
-                    @string.Format("{0:0,0}", 15000)
-                    تومان
-                </div>
+              
 
 
                 <div class="col-md-6" style="text-align:right">
                     <span>جمع کل</span>
                 </div>
                 <div class="col-md-6" style="text-align:left">
-                    <b>
-                        @string.Format("{0:0,0}", ViewBag.Order.ComputeTotalPrice() + 15000)
+                    <b  id="TotalPrice">
+                        @string.Format("{0:0,0}", ViewBag.Order.ComputeTotalPrice() )
                         تومان
 
                     </b>

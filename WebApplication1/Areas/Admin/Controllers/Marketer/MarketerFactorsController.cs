@@ -73,7 +73,7 @@ namespace WebApplication1.Areas.Admin.Controllers.Marketer
 
                 user.IsFirstTime = false;
             }
-
+            int total = 0;
             foreach (var item in data.MarketerFactorItems)
             {
                 int pid = item.Product.Id;
@@ -90,17 +90,20 @@ namespace WebApplication1.Areas.Admin.Controllers.Marketer
 
                 var sum = item.Qty * item.UnitPrice;
                 var res = (int)(sum * percent / 100);
+                total += res;
+                
 
-                var commision = new Commission();
-                commision.Date = DateTime.Now;
-                commision.Detail = "کمیسیون فاکتور شماره "+data.Id + " بمیزان یک درصد";
-                commision.Formula = "0.01 * " + item.Qty*item.UnitPrice;
-                commision.Money = res;
-                commision.MarketerUser = data.MarketerUser;
-                commision.MarketerFactor = data;
-
-                db.Commission.Add(commision);
+                
             }
+            var commision = new Commission();
+            commision.Date = DateTime.Now;
+            commision.Detail = "کمیسیون فاکتور شماره " + data.Id + " بمیزان یک درصد";
+            commision.Formula = "";
+            commision.Money = total;
+            commision.MarketerUser = data.MarketerUser;
+            commision.MarketerFactor = data;
+            db.Commission.Add(commision);
+
             data.IsAdminCheck = true;
             db.SaveChanges();
 

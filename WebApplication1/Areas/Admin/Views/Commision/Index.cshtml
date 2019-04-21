@@ -51,7 +51,6 @@
                     <th>خریدار</th>
                     <th>تاریخ</th>
                     <th>مبلغ</th>
-                    <th>فرمول</th>
                     <th>جزئیات</th>
                 </tr>
                 @foreach (var c in ViewBag.Data.Data)
@@ -61,7 +60,6 @@
                         <td>@c.MarketerFactor.Buyer</td>
                         <td>@ShamsiDate.ToShamsi(c.Date)</td>
                         <td>@c.Money</td>
-                        <td style="direction:ltr;text-align:center">@c.Formula</td>
                         <td>@c.Detail</td>
                        
                    
