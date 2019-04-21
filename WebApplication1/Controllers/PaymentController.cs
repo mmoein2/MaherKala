@@ -79,7 +79,7 @@ namespace WebApplication1.Controllers
             paymentId = p.Id;
 
             var client = new BankToken.TokensClient();
-            string token = client.MakeToken(TotalPrice.ToString(), "HED1", paymentId.ToString(), paymentId.ToString(), "", RedirectPage, "").token;
+            string token = client.MakeToken(p.Amount.ToString(), "HED1", paymentId.ToString(), paymentId.ToString(), "", RedirectPage, "").token;
             var pay = db.Payments.Include("User").Where(q => q.Id == paymentId).FirstOrDefault();
                 pay.StatusPayment = token;
             db.SaveChanges();
@@ -116,7 +116,7 @@ namespace WebApplication1.Controllers
         [Route("/Payment/Pay")]
         public ActionResult Pay()
         {
-
+            int ism = 0;
             if (Request.Form["ResultCode"].ToString().Equals(string.Empty))
             {
                 ViewBag.Message = "پاسخی از بانک دریافت نشد";
@@ -161,6 +161,7 @@ namespace WebApplication1.Controllers
                 if(payment.IsForMarketer)
                 {
                     payment = db.Payments.Include("MarketerUser").Include("MarketerFactor").Where(p => p.Id == paymentId).Where(p => p.IsUsed == false).FirstOrDefault();
+                    ism = 1;
                 }
                 else
                 {
@@ -231,6 +232,7 @@ namespace WebApplication1.Controllers
                 }
 
             }
+            ViewBag.ism = ism;
             db.SaveChanges();
             return View();
 

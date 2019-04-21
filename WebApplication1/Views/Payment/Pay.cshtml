@@ -25,7 +25,15 @@
         </div>
 
         <div class="col-sm-12 d-sm-block  d-md-none d-xl-none  d-lg-none d-xs-block" style="margin:30px;text-align:center">
-            <a href="intent://@(ViewBag.transactionState)#Intent;scheme=danesh;package=ir.shop1.shop1;end" style="font-size:16px" class="btn btn-success">بازگشت به اپلیکیشن</a>
+            @if(ViewBag.ism==0)
+            {
+
+            <a href="intent://@(ViewBag.transactionState)#Intent;scheme=maher;package=ir.shop2.shop2;end" style="font-size:16px" class="btn btn-success">بازگشت به اپلیکیشن</a>
+            }
+            else
+            {
+            <a href="intent://@(ViewBag.transactionState)#Intent;scheme=marketer;package=ir.marketer.marketer;end" style="font-size:16px" class="btn btn-success">بازگشت به اپلیکیشن</a>
+            }
         </div>
     </div>
 </div>

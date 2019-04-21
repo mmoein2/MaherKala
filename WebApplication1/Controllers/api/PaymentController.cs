@@ -303,9 +303,6 @@ namespace WebApplication1.Controllers.api
             
             db.SaveChanges();
             tr.Commit();
-            return new { Message = 0 };
-
-
 
             int paymentId = 0;
 
